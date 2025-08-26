@@ -1,45 +1,52 @@
-from machine import Pin, ADC
+from machine import Pin, time_pulse_us
 import time
 
 # --- Configuração dos Pinos ---
-# Pino para o sensor Fotoresistor LDR
-# O pino GPIO4 será usado para leitura analógica
-PINO_LDR = 4
+# Pinos do sensor ultrassônico HC-SR04
+PINO_TRIG = 25
+PINO_ECHO = 27
 
-# Pino do LED indicador de ambiente escuro
-# O pino GPIO23 será usado para controlar o LED
-PINO_LED_ESCURO = 23
+# Pino do LED vermelho
+# Escolha um pino GPIO digital disponível, por exemplo, o 26.
+# Verifique o diagrama de pinos do seu ESP32 no simulador ou datasheet.
+PINO_LED_INTRUSO = 26
 
-# Crie os objetos ADC e Pin com a configuração correta
-# A classe ADC é para leitura analógica
-sensor_ldr = ADC(Pin(PINO_LDR))
-# A classe Pin é para controle digital (ligar/desligar o LED)
-led_escuro = Pin(PINO_LED_ESCURO, Pin.OUT)
+# Crie os objetos Pin com a configuração correta
+trig = Pin(PINO_TRIG, Pin.OUT)
+echo = Pin(PINO_ECHO, Pin.IN)
+led_intruder = Pin(PINO_LED_INTRUSO, Pin.OUT)
 
-#   a resolução do ADC para maior precisão (12 bits)
-sensor_ldr.width(ADC.WIDTH_12BIT)
-# Configure a atenuação para a faixa de 0 a 3.3V
-sensor_ldr.atten(ADC.ATTN_11DB) 
+# --- Função de Medição de Distância (sem alterações) ---
+def obter_distancia():
+    """
+    Mede a distância em centímetros usando o sensor HC-SR04.
+    """
+    trig.value(0)
+    time.sleep_us(2)
+
+    trig.value(1)
+    time.sleep_us(10)
+    trig.value(0)
+
+    duracao = time_pulse_us(echo, 1, 30000)
+    distancia = (duracao / 2) * 0.0343
+    return distancia
 
 # --- Loop Principal de Ação ---
 while True:
-    # Ação: Ler o valor do sensor LDR
-    valor_luminosidade = sensor_ldr.read()
-    
-    # Exibe a leitura no console
-    print("Valor de luminosidade:", valor_luminosidade)
-    
-    # Habilidade: Tomada de Decisão baseada em dados
-    # A lógica de leitura do LDR é: quanto mais AUSÊNCIA DE LUZ menor o valor
-    LIMIAR_ESCURO = 400
+    dist = obter_distancia()
+    print("Distância:", dist, "cm")
 
-    if valor_luminosidade < LIMIAR_ESCURO:
-        # Se o valor for baixo (indicando pouca luz), acende o LED
-        print("Ambiente escuro! Acendendo o LED.")
-        led_escuro.value(1)  # Acende o LED
+    # --- Ação de Atuação: Controle do LED ---
+    if dist <= 10:
+        # Se a distância for menor ou igual a 10 cm, acende o LED
+        print("INTRUSO DETECTADO!")
+        led_intruder.value(1)  # Acende o LED (sinal HIGH)
+        time.sleep(1)
     else:
-        # Se houver luz, apaga o LED
-        print("Ambiente claro. LED apagado.")
-        led_escuro.value(0)  # Apaga o LED
-    
-    time.sleep(1)  # Aguarda 1 segundo antes da próxima leitura
+        # Se não houver intruso, apaga o LED
+        print("Ambiente seguro.")
+        led_intruder.value(0)  # Apaga o LED (sinal LOW)
+
+    time.sleep(1)
+
