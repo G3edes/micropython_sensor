@@ -56,6 +56,8 @@ Nesse circuito o sensor detecta se há umidade ou não, e se o nível de umidade
 
 -  GitHub 
 
+---
+
 # Projeto Alpha Corp - IOT
 
 ## Sobre
@@ -101,6 +103,7 @@ O desafio foi automatizar a contagem de frascos que passam pela esteira, garanti
 ## Autores
 - [Gabriel Guedes](https://www.linkedin.com/in/gabriel-silva-guedes-84b507327/)
 - [Thayná de Oliveira](https://www.linkedin.com/in/thayná-freire-863696297)  
+
 
 
 
