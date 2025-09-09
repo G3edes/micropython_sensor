@@ -12,20 +12,20 @@ Utilizamos o **Wokwi** para as simulações e fizemos a documentação pelo **Vi
 ### Sensor de luminosidade - LDR
 Nesse circuito ao detectar baixa luminosidade o led acende. 
 
-![](./sensor-de-luminosidade.jpeg)
+![](./img/sensor-de-luminosidade.jpeg)
 
 ---
 
 ### Sensor de proximidade - HC-SR04
 Nesse circuito ao sensor detectar algo próximo, o led acende.
-![](./sensor-de-proximidade.jpeg)
+![](./img/sensor-de-proximidade.jpeg)
 
 ---
 
 ### Sensor de umidade capacitivo
 Nesse circuito o sensor detecta se há umidade ou não, e se o nível de umidade for baixo o led acende.
-![](./sensor-de-umidade-1.jpeg)
-![](./sensor-de-umidade-2.jpeg)
+![](./img/sensor-de-umidade-1.jpeg)
+![](./img/sensor-de-umidade-2.jpeg)
 
 ---
 
@@ -77,7 +77,7 @@ O desafio foi automatizar a contagem de frascos que passam pela esteira, garanti
 * Ao contar 10 frascos, o sistema adiciona uma caixa.
 * Os LED's são apenas para melhor visualização do processo.
 
-![](./alphacorpcircuito.png)
+![](./img/alphacorpcircuito.png)
 
 ---
 
@@ -103,6 +103,7 @@ O desafio foi automatizar a contagem de frascos que passam pela esteira, garanti
 ## Autores
 - [Gabriel Guedes](https://www.linkedin.com/in/gabriel-silva-guedes-84b507327/)
 - [Thayná de Oliveira](https://www.linkedin.com/in/thayná-freire-863696297)  
+
 
 
 
